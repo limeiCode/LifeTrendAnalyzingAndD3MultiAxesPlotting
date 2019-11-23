@@ -40,9 +40,9 @@
   margin: 0;
 }
 
-.d3-tip {
-  padding: 6px;
-  font-size: 12px;
+.tooltip {
+  padding: 2px;
+  font-size: 8px;
   line-height: 1;
   line-height: 1.5em;
   color: #fff;
@@ -51,6 +51,21 @@
   background: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
 }
+.d3-tip {
+  position: absolute;
+  width: 140px;
+  height: 40px;
+  padding: 2px;
+  font-size: 8px;
+  font:  sans-serif;
+  text-align: center;
+  color: white;
+  background: blue;
+  border: 1;
+  border-radius: 10px;
+}
+
+
 
 /* Mobile Rules */
 @media screen and (max-width: 530px) {

@@ -49,7 +49,7 @@
 //         left: svgWidth * marginHorizontalRatio
 //     };
 
-//     var xLabelHeight = 30;
+//     var xLabelHeight = 40;
 //     var yLabelWidth = 40;
 
 //     var chartWidth = svgWidth - margin.left - margin.right ;
@@ -117,6 +117,15 @@
 //         return circlesGroup;
 //     }
 
+//      //Function used for updating texts group with a transition to new texts
+//      function renderTexts(textsGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+//          textsGroup.transition()
+//                          .duration(1000)
+//                          .attr("x", d => newXScale(d[chosenXAxis]))
+//                          .attr("y", d => newYScale(d[chosenYAxis]));
+//      return textsGroup;
+//      }
+
 //     //Function used for updating circles group with new tooltip
 //     function updateToolTip(circlesGroup, chosenXAxis, chosenYAxis ) {        
 //         if (chosenXAxis === "poverty") {var xlabel = "In Poverty(%)"; }// variables: poverty,age,income // labels: In Poverty(%),Age(Median),Household Income(Median)
@@ -126,10 +135,10 @@
 //         else if (chosenYAxis === "smokes"){var ylabel = "Smokes(%)"; }
 //         else { var ylabel = "Obesity(%)"; }
 //         var toolTip = d3.tip()  //TypeError: d3.tip is not a function
-//                             .attr("class", "tooltip")
-//                             .offset([80, -60])     // 80, -60 ??
+//                             .attr("class", "d3-tip")
+//                             .offset([0, 0])     
 //                             .html(function(d) {
-//                                 return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
+//                                  return (`<strong>${d.state}</strong><br>${xlabel} : ${d[chosenXAxis]}<br>${ylabel} : ${d[chosenYAxis]}`);
 //                             });
 //         circlesGroup.call(toolTip); //attach to circlesGroup
 //         circlesGroup.on("mouseover", function(data) {toolTip.show(data);})  // data???
@@ -188,7 +197,24 @@
 //                                                   .attr("fill", "pink")
 //                                                   .attr("opacity", ".5")   // 0.5??
 //                                                   .style("text", d => d.abbr); // d.abbr: abbr is column name, d[chosenXAxis]: column name is in variable chosenXAxis
- 
+
+//         //Append initial texts
+//         var ss;
+//         var textsGroup = chartGroup.selectAll("text")
+//         .data(lifeData)
+//         .enter()
+//             .append("text")
+//                 .attr("x", d => xLinearScale(d[chosenXAxis]))
+//                 .attr("y", d => yLinearScale(d[chosenYAxis]))
+//                 .attr("text-anchor", "middle")
+//                 .attr("font-size", "6px")
+//                 .attr("fill", "green")
+//                 .text(function(d,i){ss=ss+d.abbr+"/"+i+"/";return d.abbr;});
+//          console.log("ss=",ss);
+//          //????ss= undefinedMI/22/MN/23/MS/24/MO/25/MT/26/NE/27/NV/28/NH/29/NJ/30/NM/31/NY/32/NC/33/ND/34/OH/35/OK/36/OR/37/PA/38/RI/39/SC/40/SD/41/TN/42/TX/43/UT/44/VT/45/VA/46/WA/47/WV/48/WI/49/WY/50/
+
+
+
 //         //Create group for 3 XAxes labels and Append XAxes
 //         var xlabelsGroup = chartGroup.append("g")
 //                                         .attr("transform", `translate(${(chartWidth-yLabelWidth)/2+yLabelWidth}, ${chartHeight-xLabelHeight})`);//${chartHeight-xLabelHeight })`);
@@ -196,6 +222,7 @@
 //         var povertyXAxisLabel = xlabelsGroup.append("text")
 //                                             .attr("x", 0)   // ??
 //                                             .attr("y", 30)  // ???
+//                                         .attr("font-size", "8px")
 //                                             .attr("value", "poverty") // value to grab for event listener  ????
 //                                             .classed("active", true)
 //                                             .text("In Poverty(%)");
@@ -203,6 +230,7 @@
 //         var ageXAxisLabel = xlabelsGroup.append("text")
 //                                         .attr("x", 0)
 //                                         .attr("y", 40)
+//                                         .attr("font-size", "8px")
 //                                         .attr("value", "age") // value to grab for event listener
 //                                         .classed("inactive", true)
 //                                         .text("Age(Median)");
@@ -210,6 +238,7 @@
 //         var incomeXAxisLabel = xlabelsGroup.append("text")
 //                                         .attr("x", 0)
 //                                         .attr("y", 50)
+//                                         .attr("font-size", "8px")
 //                                         .attr("value", "income") // value to grab for event listener
 //                                         .classed("inactive", true)
 //                                         .text("Household Income(Median)");
@@ -224,6 +253,7 @@
 //                                             // .attr("dy", "1em")
 //                                             .attr("x", 0)
 //                                             .attr("y", 20)
+//                                         .attr("font-size", "8px")
 //                                             .attr("value", "healthcare") // value to grab for event listener  ????
 //                                             .classed("active", true)
 //                                             .text("Lacks Healthcare(%)");
@@ -232,6 +262,7 @@
 //                                         .attr("transform", "rotate(-90)")
 //                                         .attr("x", 0)
 //                                         .attr("y", 10)
+//                                         .attr("font-size", "8px")
 //                                         .attr("value", "smokes") // value to grab for event listener
 //                                         .classed("inactive", true)
 //                                         .text("Smokes(%)");
@@ -240,6 +271,7 @@
 //                                         .attr("transform", "rotate(-90)")
 //                                         .attr("x", 0)
 //                                         .attr("y", 0)
+//                                         .attr("font-size", "8px")
 //                                         .attr("value", "obesity") // value to grab for event listener
 //                                         .classed("inactive", true)
 //                                         .text("Obesity(%)");
@@ -259,6 +291,7 @@
 //                             xLinearScale = xScale(lifeData, chosenXAxis);// updates x scale for new data
 //                             xAxis = renderXAxes(xLinearScale, xAxis);// updates x axis with transition
 //                             circlesGroup = renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis);// updates circles with new x values
+//                             textsGroup = renderTexts(textsGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);// updates texts with new x values
 //                             circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);// updates tooltips with new info
 //                             if (chosenXAxis === "poverty") {// changes classes to change bold text
 //                                 povertyXAxisLabel.classed("active", true)
@@ -297,8 +330,9 @@
 //                             chosenYAxis = value; 
 //                             // console.log(chosenXAxis)            
 //                             yLinearScale = yScale(lifeData, chosenYAxis); 
-//                             yAxis = renderXAxes(yLinearScale, yAxis); 
+//                             yAxis = renderYAxes(yLinearScale, yAxis); 
 //                             circlesGroup = renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis); 
+//                             textsGroup = renderTexts(textsGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);// updates texts with new y values
 //                             circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis); 
 //                             if (chosenYAxis === "healthcare") {// changes classes to change bold text
 //                                 healthcareYAxisLabel.classed("active", true)
@@ -391,7 +425,7 @@ function makeResponsive() {
         left: svgWidth * marginHorizontalRatio
     };
 
-    var xLabelHeight = 30;
+    var xLabelHeight = 40;
     var yLabelWidth = 40;
 
     var chartWidth = svgWidth - margin.left - margin.right ;
@@ -456,6 +490,16 @@ function makeResponsive() {
         return circlesGroup;
     }
 
+    //Function used for updating texts group with a transition to new texts
+    function renderTexts(textsGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+        textsGroup.transition()
+                        .duration(1000)
+                        .attr("x", d => newXScale(d[chosenXAxis]))
+                        .attr("y", d => newYScale(d[chosenYAxis]));
+    return textsGroup;
+    }
+
+
     //Function used for updating circles group with new tooltip
     function updateToolTip(circlesGroup, chosenXAxis, chosenYAxis ) {        
         if (chosenXAxis === "poverty") {var xlabel = "In Poverty(%)"; }
@@ -465,11 +509,11 @@ function makeResponsive() {
         else if (chosenYAxis === "smokes"){var ylabel = "Smokes(%)"; }
         else { var ylabel = "Obesity(%)"; }
         var toolTip = d3.tip()   
-                            .attr("class", "tooltip")
-                            .offset([80, -60])     
-                            .html(function(d) {
-                                return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
-                            });
+                        .attr("class", "d3-tip")
+                        .offset([0, 0])     
+                        .html(function(d) {
+                            return (`<strong>${d.state}</strong><br>${xlabel} : ${d[chosenXAxis]}<br>${ylabel} : ${d[chosenYAxis]}`);
+                        });
         circlesGroup.call(toolTip);  
         circlesGroup.on("mouseover", function(data) {toolTip.show(data);})   
                     .on("mouseout", function(data, index) {toolTip.hide(data);});
@@ -486,7 +530,7 @@ function makeResponsive() {
                 data.age = +data.age;    
                 data.income = +data.income;
                 data.obesity = +data.obesity;  
-        });
+            });
 
 
         //xLinearScale function above csv import
@@ -517,61 +561,80 @@ function makeResponsive() {
                                                   .attr("cy", d => yLinearScale(d[chosenYAxis]))  
                                                   .attr("r", 8)          
                                                   .attr("fill", "pink")
-                                                  .attr("opacity", ".5")   
-                                                  .style("text", d => d.abbr); 
- 
+                                                  .attr("opacity", ".5");   
+        //Append initial texts
+        var ss;
+        var textsGroup = chartGroup.selectAll("text")
+        .data(lifeData)
+        .enter()
+            .append("text")
+                .attr("x", d => xLinearScale(d[chosenXAxis]))
+                .attr("y", d => yLinearScale(d[chosenYAxis]))
+                .attr("text-anchor", "middle")
+                .attr("font-size", "6px")
+                .attr("fill", "green")
+                .text(function(d,i){ss=ss+d.abbr+"/"+i+"/";return d.abbr;});
+        console.log("ss=",ss);
+        //????ss= undefinedMI/22/MN/23/MS/24/MO/25/MT/26/NE/27/NV/28/NH/29/NJ/30/NM/31/NY/32/NC/33/ND/34/OH/35/OK/36/OR/37/PA/38/RI/39/SC/40/SD/41/TN/42/TX/43/UT/44/VT/45/VA/46/WA/47/WV/48/WI/49/WY/50/
+
         //Create group for 3 XAxes labels and Append XAxes
         var xlabelsGroup = chartGroup.append("g")
                                         .attr("transform", `translate(${(chartWidth-yLabelWidth)/2+yLabelWidth}, ${chartHeight-xLabelHeight})`);//${chartHeight-xLabelHeight })`);
 
         var povertyXAxisLabel = xlabelsGroup.append("text")
-                                            .attr("x", 0)   
-                                            .attr("y", 30)  
-                                            .attr("value", "poverty") 
-                                            .classed("active", true)
-                                            .text("In Poverty(%)");
+                                                .attr("x", 0)   
+                                                .attr("y", 30)  
+                                                .attr("font-size", "8px")
+                                                .attr("value", "poverty") 
+                                                .classed("active", true)
+                                                .text("In Poverty(%)");
 
         var ageXAxisLabel = xlabelsGroup.append("text")
-                                        .attr("x", 0)
-                                        .attr("y", 40)
-                                        .attr("value", "age") // value to grab for event listener
-                                        .classed("inactive", true)
-                                        .text("Age(Median)");
+                                            .attr("x", 0)
+                                            .attr("y", 40)
+                                            .attr("font-size", "8px")
+                                            .attr("value", "age") // value to grab for event listener
+                                            .classed("inactive", true)
+                                            .text("Age(Median)");
 
         var incomeXAxisLabel = xlabelsGroup.append("text")
-                                        .attr("x", 0)
-                                        .attr("y", 50)
-                                        .attr("value", "income") // value to grab for event listener
-                                        .classed("inactive", true)
-                                        .text("Household Income(Median)");
+                                                .attr("x", 0)
+                                                .attr("y", 50)
+                                                .attr("font-size", "8px")
+                                                .attr("value", "income") // value to grab for event listener
+                                                .classed("inactive", true)
+                                                .text("Household Income(Median)");
 
         //Create group for 3 YAxes labels and Append YAxes
         var ylabelsGroup = chartGroup.append("g")
                                         .attr("transform", `translate(0, ${xLabelHeight+(chartHeight-xLabelHeight)/2})`);
 
         var healthcareYAxisLabel = ylabelsGroup.append("text")        
-                                            .attr("transform", "rotate(-90)")
-                                            .attr("x", 0)
-                                            .attr("y", 20)
-                                            .attr("value", "healthcare") 
-                                            .classed("active", true)
-                                            .text("Lacks Healthcare(%)");
+                                                    .attr("transform", "rotate(-90)")
+                                                    .attr("x", 0)
+                                                    .attr("y", 20)
+                                                    .attr("font-size", "8px")
+                                                    .attr("value", "healthcare") 
+                                                    .classed("active", true)
+                                                    .text("Lacks Healthcare(%)");
 
         var smokesYAxisLabel = ylabelsGroup.append("text")
-                                        .attr("transform", "rotate(-90)")
-                                        .attr("x", 0)
-                                        .attr("y", 10)
-                                        .attr("value", "smokes") 
-                                        .classed("inactive", true)
-                                        .text("Smokes(%)");
+                                                .attr("transform", "rotate(-90)")
+                                                .attr("x", 0)
+                                                .attr("y", 10)
+                                                .attr("font-size", "8px")
+                                                .attr("value", "smokes") 
+                                                .classed("inactive", true)
+                                                .text("Smokes(%)");
 
         var obesityYAxisLabel = ylabelsGroup.append("text")
-                                        .attr("transform", "rotate(-90)")
-                                        .attr("x", 0)
-                                        .attr("y", 0)
-                                        .attr("value", "obesity") 
-                                        .classed("inactive", true)
-                                        .text("Obesity(%)");
+                                                .attr("transform", "rotate(-90)")
+                                                .attr("x", 0)
+                                                .attr("y", 0)
+                                                .attr("font-size", "8px")
+                                                .attr("value", "obesity") 
+                                                .classed("inactive", true)
+                                                .text("Obesity(%)");
 
 
 
@@ -587,7 +650,8 @@ function makeResponsive() {
                             // console.log(chosenXAxis)            
                             xLinearScale = xScale(lifeData, chosenXAxis);// updates x scale for new data
                             xAxis = renderXAxes(xLinearScale, xAxis);// updates x axis with transition
-                            circlesGroup = renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis);// updates circles with new x values
+                            circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);// updates circles with new x values
+                            textsGroup = renderTexts(textsGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);// updates texts with new x values
                             circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);// updates tooltips with new info
                             if (chosenXAxis === "poverty") {// changes classes to change bold text
                                 povertyXAxisLabel.classed("active", true)
@@ -624,8 +688,9 @@ function makeResponsive() {
                             chosenYAxis = value; 
                             // console.log(chosenXAxis)            
                             yLinearScale = yScale(lifeData, chosenYAxis); 
-                            yAxis = renderXAxes(yLinearScale, yAxis); 
-                            circlesGroup = renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis); 
+                            yAxis = renderYAxes(yLinearScale, yAxis); 
+                            circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis); 
+                            textsGroup = renderTexts(textsGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);// updates texts with new y values
                             circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis); 
                             if (chosenYAxis === "healthcare") {// changes classes to change bold text
                                 healthcareYAxisLabel.classed("active", true)
