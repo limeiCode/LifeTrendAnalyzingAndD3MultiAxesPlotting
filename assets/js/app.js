@@ -397,6 +397,30 @@
 //===Run: You'll need to use python -m http.server to run the visualization. This will host the page at localhost:8000 in your web browser. 0.0.0.0:8000 may not work on your computer so remember that it is localhost:8000.
 //===========================================================================================================================================
 
+// 
+// Main Directory/
+// └── Assets/
+// │    ├── css/
+// │    │   ├── data/
+// │    │   │   ├── js
+// │    │   │   │   ├── app.js Functions:
+// │    │   │   │   ├── xScale(rawData, chosenXAxis)    // xScale(rawData, chosenXAxis)   // xScale(rawData, chosenXAxis)
+// │    │   │   │   ├── yScale(rawData, chosenYAxis)    // yScale(rawData, chosenYAxis)
+// │    │   │   │   ├── renderXAxis(newXScale, xAxis)   // renderXAxis(xLinearScale, xAxis)
+// │    │   │   │   ├── renderYAxis(newYScale, yAxis)   // renderYAxis(yLinearScale, yAxis)
+// │    │   │   │   ├── renderXCircles(circlesGroup, newScale, newAxis)   // renderXCircles(circlesGroup, xLinearScale, chosenXAxis)
+// │    │   │   │   ├── renderYCircles(circlesGroup, newScale, newAxis)   // renderYCircles(circlesGroup, yLinearScale, chosenYAxis)
+// │    │   │   │   ├── updateToolTip(chosenXAxis, chosenYAxis, circlesGroup)
+// │    │   │   │   ├── 
+// │    │   │   │   ├── MAIN FUNCTION (read csv, listen to buttons, change values, update circles, update tooltips)
+// │    │   │   │   └── 
+// │    │   │   ├── app.js
+// │    │   │   └── eslintrc.json
+// │    │   └── data.csv
+// │    ├── style.css      
+// │    └── d3Style.css
+// └── index.html
+
 
 //The code for the chart is wrapped inside a function that automatically resizes the chart
 function makeResponsive() {
@@ -425,8 +449,8 @@ function makeResponsive() {
         left: svgWidth * marginHorizontalRatio
     };
 
-    var xLabelHeight = 40;
-    var yLabelWidth = 40;
+    var xLabelHeight = 100;
+    var yLabelWidth = 100;
 
     var chartWidth = svgWidth - margin.left - margin.right ;
     var chartHeight = svgHeight - margin.top - margin.bottom ;
@@ -559,22 +583,25 @@ function makeResponsive() {
                                               .append("circle")
                                                   .attr("cx", d => xLinearScale(d[chosenXAxis])) 
                                                   .attr("cy", d => yLinearScale(d[chosenYAxis]))  
-                                                  .attr("r", 8)          
-                                                  .attr("fill", "pink")
+                                                  .attr("r", 10)          
+                                                  .attr("fill", "green")
                                                   .attr("opacity", ".5");   
         //Append initial texts
-        var ss;
-        var textsGroup = chartGroup.selectAll("text")
+        // var ss;
+        var textsGroup = chartGroup.selectAll("text .abbrtext")
         .data(lifeData)
         .enter()
             .append("text")
+                .attr("class","abbrtext")
                 .attr("x", d => xLinearScale(d[chosenXAxis]))
                 .attr("y", d => yLinearScale(d[chosenYAxis]))
                 .attr("text-anchor", "middle")
-                .attr("font-size", "6px")
+                .attr("font-size", "8px")
+                .attr("font-weight", "bold")
                 .attr("fill", "green")
-                .text(function(d,i){ss=ss+d.abbr+"/"+i+"/";return d.abbr;});
-        console.log("ss=",ss);
+                .text(function(d,i){return d.abbr;});
+                // .text(function(d,i){ss=ss+d.abbr+"/"+i+"/";return d.abbr;});
+        // console.log("ss=",ss);
         //????ss= undefinedMI/22/MN/23/MS/24/MO/25/MT/26/NE/27/NV/28/NH/29/NJ/30/NM/31/NY/32/NC/33/ND/34/OH/35/OK/36/OR/37/PA/38/RI/39/SC/40/SD/41/TN/42/TX/43/UT/44/VT/45/VA/46/WA/47/WV/48/WI/49/WY/50/
 
         //Create group for 3 XAxes labels and Append XAxes
@@ -583,24 +610,24 @@ function makeResponsive() {
 
         var povertyXAxisLabel = xlabelsGroup.append("text")
                                                 .attr("x", 0)   
-                                                .attr("y", 30)  
-                                                .attr("font-size", "8px")
+                                                .attr("y", 40)  
+                                                .attr("font-size", "18px")
                                                 .attr("value", "poverty") 
                                                 .classed("active", true)
                                                 .text("In Poverty(%)");
 
         var ageXAxisLabel = xlabelsGroup.append("text")
                                             .attr("x", 0)
-                                            .attr("y", 40)
-                                            .attr("font-size", "8px")
+                                            .attr("y", 60)
+                                            .attr("font-size", "18px")
                                             .attr("value", "age") // value to grab for event listener
                                             .classed("inactive", true)
                                             .text("Age(Median)");
 
         var incomeXAxisLabel = xlabelsGroup.append("text")
                                                 .attr("x", 0)
-                                                .attr("y", 50)
-                                                .attr("font-size", "8px")
+                                                .attr("y", 80)
+                                                .attr("font-size", "18px")
                                                 .attr("value", "income") // value to grab for event listener
                                                 .classed("inactive", true)
                                                 .text("Household Income(Median)");
@@ -612,8 +639,8 @@ function makeResponsive() {
         var healthcareYAxisLabel = ylabelsGroup.append("text")        
                                                     .attr("transform", "rotate(-90)")
                                                     .attr("x", 0)
-                                                    .attr("y", 20)
-                                                    .attr("font-size", "8px")
+                                                    .attr("y", 40)
+                                                    .attr("font-size", "18px")
                                                     .attr("value", "healthcare") 
                                                     .classed("active", true)
                                                     .text("Lacks Healthcare(%)");
@@ -621,8 +648,8 @@ function makeResponsive() {
         var smokesYAxisLabel = ylabelsGroup.append("text")
                                                 .attr("transform", "rotate(-90)")
                                                 .attr("x", 0)
-                                                .attr("y", 10)
-                                                .attr("font-size", "8px")
+                                                .attr("y", 20)
+                                                .attr("font-size", "18px")
                                                 .attr("value", "smokes") 
                                                 .classed("inactive", true)
                                                 .text("Smokes(%)");
@@ -631,7 +658,7 @@ function makeResponsive() {
                                                 .attr("transform", "rotate(-90)")
                                                 .attr("x", 0)
                                                 .attr("y", 0)
-                                                .attr("font-size", "8px")
+                                                .attr("font-size", "18px")
                                                 .attr("value", "obesity") 
                                                 .classed("inactive", true)
                                                 .text("Obesity(%)");
@@ -643,8 +670,9 @@ function makeResponsive() {
 
         //X axis labels event listener
         xlabelsGroup.selectAll("text")
-                    .on("click", function() {        
-                        var value = d3.select(this).attr("value");
+                        .on("click", function() {        
+                        var value = d3.select(this)
+                                         .attr("value");
                         if (value !== chosenXAxis) {            
                             chosenXAxis = value;// replaces chosenXAxis with value
                             // console.log(chosenXAxis)            
