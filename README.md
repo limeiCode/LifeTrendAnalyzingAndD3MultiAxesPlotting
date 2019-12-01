@@ -21,15 +21,15 @@ The data set [https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xh
 
 * **JavaScript** interacts with HTML elements (DOM elements) to make the web user interface interactive. 
 
-* **d3.js** Data-Driven Documents Javascript library is used to manipulate documents based on data and allows to bind arbitrary data to a Document Object Model (DOM).
+* **D3.js** Data-Driven Documents Javascript library is used to manipulate documents based on data and allows to bind arbitrary data to a Document Object Model (DOM).
 
-* **d3-tip.js** plugin is used to create tooltips by adding another layer of data to reveal a specific element's data when the user hovers cursor over the element in addtion to ticks on the axes telling approximate values for the element. 
+* **D3-tip.js** plugin is used to create tooltips by adding another layer of data to reveal a specific element's data when the user hovers cursor over the element in addtion to ticks on the axes telling approximate values for the element. 
 
 ## Project Files:
 
 * **index.html**:  Homepage of the website. 
 
-* **assets\js\app.js**:  Javascript code creates a dynamic interactive Multi-Axes(three X Axile labesl and three Y Axile labels) Visualiztion. Click different X Axile labels and Y Axile labels can analyze *specific data* on the scatter plot -- `one` of the nine possible correlations. Each circle element represents a state with state abbraviation in it. Animation is generated through the transitions for circles' locations as well as the range of axes(three for each axis). Data-driven transformations like linear scaling is also applied to the document based on the range of axes(three for each axis), so the coordinate origin not (0,0).
+* **assets\js\app.js**:  Javascript code creates a dynamic interactive `Multi-Axes`(three X Axile labesl and three Y Axile labels) Visualiztion. Click different X Axile labels and Y Axile labels can analyze *specific data* on the scatter plot -- `one` of the nine possible correlations. Each circle element represents a state with state abbraviation in it. Animation is generated through the transitions for circles' locations as well as the range of axes(three for each axis). Data-driven transformations like linear scaling is also applied to the document based on the range of axes(three for each axis), so the coordinate origin not (0,0).
 
 * **assets\css\style.css, d3Style.css**: External style sheets which change the look of the entire website.
 
