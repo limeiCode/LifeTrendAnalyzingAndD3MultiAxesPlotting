@@ -1,6 +1,6 @@
 # Life Trend Analyzing and Dynamice Charting Using D3.js
 
-This project used <span style="color:purple ;">**HTML, CSS, Bootstrap Table, SVG, JavaScript **</span> and <span style="color:purple;">**dD3.js, D3-tip.js plugin**</span> to build an  `interactive` , `responsive` and `multi-axis` data visualization  for Life Trend Analyzing.
+This project used **HTML, CSS, Bootstrap Table, SVG, JavaScript** and <span style="color:purple;">**dD3.js, D3-tip.js plugin**</span> to build an  `interactive` , `responsive` and `multi-axis` data visualization  for Life Trend Analyzing.
 
 - - -
 
