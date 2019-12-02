@@ -1,6 +1,6 @@
 # Life Trend Analyzing and Dynamice Charting Using D3.js
 
-This project used <span style="color:purple ;">**d3.js**</span> and <span style="color:purple;">**SVG**</span> to build an  `interactive` , `responsive` and `multi-axis` data visualization  for Life Trend Analyzing.
+This project used <span style="color:purple ;">**HTML, CSS, Bootstrap Table, SVG, JavaScript **</span> and <span style="color:purple;">**dD3.js, D3-tip.js plugin**</span> to build an  `interactive` , `responsive` and `multi-axis` data visualization  for Life Trend Analyzing.
 
 - - -
 
@@ -15,11 +15,11 @@ The data set [https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xh
 
 ## Technologies Used
 
+*  **Bootstrap Table** is used to set the layout of the webpage and it can makes a *Responsive Tables* by using `table-responsive` class. It scrolls horizontally up to small devices (under 768px) and when viewing on anything larger than 768px wide no any difference.
+
+* **JavaScript** When a HTML page is loaded by a browser, it is converted to a hierarchical structure - *DOM* Document Object Model. JavaScript interacts with HTML elements (DOM elements) to make the web user interface *interactive*. 
+
 * **SVG** Scalable Vector Graphics is a way to create images using text. It scales itself *dynamically* according to the size of the browser(responsive to screen size), so the image is not distorted by resizing browser.
-
-* When a HTML page is loaded by a browser, it is converted to a hierarchical structure - *DOM* Document Object Model.
-
-* **JavaScript** interacts with HTML elements (DOM elements) to make the web user interface *interactive*. 
 
 * **D3.js** Data-Driven Documents Javascript library is used to manipulate documents based on data and allows to bind arbitrary data to a Document Object Model (DOM).
 
