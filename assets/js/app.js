@@ -100,7 +100,6 @@ function makeResponsive() {
         var circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
 
         //Append initial texts
-        // var ss;
         var textsGroup = chartGroup.selectAll("text .abbrtext")
         .data(lifeData)
         .enter()
@@ -113,10 +112,6 @@ function makeResponsive() {
                 .attr("font-weight", "bold")
                 .attr("fill", "green")
                 .text(d=>d.abbr);
-                // .text(function(d,i){return d.abbr;});
-                // .text(function(d,i){ss=ss+d.abbr+"/"+i+"/";return d.abbr;});
-        // console.log("ss=",ss);
-        //????ss= undefinedMI/22/MN/23/MS/24/MO/25/MT/26/NE/27/NV/28/NH/29/NJ/30/NM/31/NY/32/NC/33/ND/34/OH/35/OK/36/OR/37/PA/38/RI/39/SC/40/SD/41/TN/42/TX/43/UT/44/VT/45/VA/46/WA/47/WV/48/WI/49/WY/50/
 
         //Create group for 3 XAxes labels and Append XAxes
         var xlabelsGroup = chartGroup.append("g")
