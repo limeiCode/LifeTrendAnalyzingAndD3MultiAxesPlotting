@@ -39,5 +39,5 @@ The data set [https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xh
 
 - - -
 
-![15result_1.png](assets/image/16Result1.png)
+![15result_1.png](assets/image/16run.gif)
 
